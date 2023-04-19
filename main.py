@@ -79,7 +79,7 @@ def model_processing(memory_size=3, input_dim=4, model_name='./model.nn'):
 
         # compiling, training and saving a model
         nn_model.compile(optimizer='nadam', loss='mse', metrics=['mae'])
-        training_history = nn_model.fit(X, Y, epochs=10, batch_size=20, validation_split=0.1)
+        training_history = nn_model.fit(X, Y, epochs=10, batch_size=10, validation_split=0.1)
         nn_model.save(model_name)
 
         # training and validation plots drawing
@@ -103,7 +103,7 @@ def create_predictions_plots(original_data, predicted_data, predicted_candles):
 
     # example: close prices (original and predicted for LATEST HOUR)
     plt.plot(range(1, len(predicted_data) + 1 - predicted_candles), predicted_data[:-predicted_candles, 3], 'bo-', label='original close price')
-    plt.plot(range(predicted_candles, len(predicted_data) + 1), predicted_data[-predicted_candles:, 3], 'yo-', label='predicted close price')
+    plt.plot(range(len(predicted_data) + 1 - predicted_candles, len(predicted_data) + 1), predicted_data[-predicted_candles:, 3], 'yo-', label='predicted close price')
 
     plt.title('Original and predicted data')
     plt.legend()
@@ -143,7 +143,7 @@ def get_predictions(memory_size=3, filename='./model.nn'):
 
 if __name__ == '__main__':
     # a number of candles for predicting
-    memory_size = 3
+    memory_size = 10
     # candle parameters count
     input_dim = 4
 
